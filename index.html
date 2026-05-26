@@ -9,6 +9,11 @@
 
 <body class="bg-black text-white min-h-screen p-6">
 
+  <!-- Background Music -->
+  <audio autoplay loop controls class="fixed bottom-4 right-4 z-50 opacity-60">
+    <source src="stadium.mp3" type="audio/mpeg">
+  </audio>
+
   <div class="max-w-7xl mx-auto">
 
     <!-- Header -->
@@ -31,7 +36,12 @@
     <div class="bg-zinc-900 p-6 rounded-2xl w-full max-w-lg relative">
       <button onclick="closeModal()" class="absolute right-4 top-4 bg-red-600 px-3 py-1 rounded">Close</button>
 
-      <img id="pimg" class="w-32 h-32 mx-auto rounded-full border-4 border-green-500 mb-4" />
+      <!-- Always Portugal Logo instead of player image -->
+      <img 
+        src="https://upload.wikimedia.org/wikipedia/en/5/5c/Portugal_national_football_team_logo.svg"
+        class="w-32 h-32 mx-auto rounded-full border-4 border-green-500 mb-4 bg-white p-2"
+      />
+
       <h2 id="pname" class="text-center text-3xl font-bold text-red-500"></h2>
       <p id="pclub" class="text-center text-gray-400 mb-4"></p>
 
@@ -44,124 +54,35 @@
 const squad = {
 
   "Goalkeepers": [
-    {
-      name: "Diogo Costa",
-      club: "FC Porto",
-      image: "https://upload.wikimedia.org/wikipedia/commons/3/3a/Diogo_Costa_2022.jpg",
-      stats: { appearances: 42, cleanSheets: 18, saves: 112 }
-    },
-    {
-      name: "José Sá",
-      club: "Wolves",
-      image: "https://upload.wikimedia.org/wikipedia/commons/5/5c/Jos%C3%A9_S%C3%A1_2022.jpg",
-      stats: { appearances: 30, cleanSheets: 8, saves: 95 }
-    },
-    {
-      name: "Rui Silva",
-      club: "Real Betis",
-      image: "https://upload.wikimedia.org/wikipedia/commons/2/2b/Rui_Silva_2021.jpg",
-      stats: { appearances: 28, cleanSheets: 10, saves: 88 }
-    }
+    { name: "Diogo Costa", club: "FC Porto", stats: { appearances: 42, cleanSheets: 18, saves: 112 } },
+    { name: "José Sá", club: "Wolves", stats: { appearances: 30, cleanSheets: 8, saves: 95 } },
+    { name: "Rui Silva", club: "Real Betis", stats: { appearances: 28, cleanSheets: 10, saves: 88 } }
   ],
 
   "Defenders": [
-    {
-      name: "Nuno Mendes",
-      club: "PSG",
-      image: "https://upload.wikimedia.org/wikipedia/commons/8/8a/Nuno_Mendes_2022.jpg",
-      stats: { appearances: 35, assists: 5 }
-    },
-    {
-      name: "João Cancelo",
-      club: "Barcelona",
-      image: "https://upload.wikimedia.org/wikipedia/commons/3/3a/Jo%C3%A3o_Cancelo_2022.jpg",
-      stats: { appearances: 41, goals: 4 }
-    },
-    {
-      name: "Rúben Dias",
-      club: "Man City",
-      image: "https://upload.wikimedia.org/wikipedia/commons/1/1b/Ruben_Dias_2021.jpg",
-      stats: { appearances: 39, tackles: 74 }
-    },
-    {
-      name: "Gonçalo Inácio",
-      club: "Sporting",
-      image: "https://upload.wikimedia.org/wikipedia/commons/4/4a/Gon%C3%A7alo_In%C3%A1cio_2023.jpg",
-      stats: { appearances: 33, goals: 3 }
-    }
+    { name: "Nuno Mendes", club: "PSG", stats: { appearances: 35, assists: 5 } },
+    { name: "João Cancelo", club: "Barcelona", stats: { appearances: 41, goals: 4 } },
+    { name: "Rúben Dias", club: "Man City", stats: { appearances: 39, tackles: 74 } },
+    { name: "Gonçalo Inácio", club: "Sporting", stats: { appearances: 33, goals: 3 } }
   ],
 
   "Midfielders": [
-    {
-      name: "Vitinha",
-      club: "PSG",
-      image: "https://upload.wikimedia.org/wikipedia/commons/6/6a/Vitinha_2023.jpg",
-      stats: { appearances: 44, assists: 5 }
-    },
-    {
-      name: "Bruno Fernandes",
-      club: "Man United",
-      image: "https://upload.wikimedia.org/wikipedia/commons/9/9a/Bruno_Fernandes_2022.jpg",
-      stats: { appearances: 48, goals: 14 }
-    },
-    {
-      name: "Bernardo Silva",
-      club: "Man City",
-      image: "https://upload.wikimedia.org/wikipedia/commons/7/7a/Bernardo_Silva_2022.jpg",
-      stats: { appearances: 45, assists: 7 }
-    },
-    {
-      name: "João Neves",
-      club: "Benfica",
-      image: "https://upload.wikimedia.org/wikipedia/commons/1/1a/Jo%C3%A3o_Neves_2024.jpg",
-      stats: { appearances: 30, tackles: 55 }
-    }
+    { name: "Vitinha", club: "PSG", stats: { appearances: 44, assists: 5 } },
+    { name: "Bruno Fernandes", club: "Man United", stats: { appearances: 48, goals: 14 } },
+    { name: "Bernardo Silva", club: "Man City", stats: { appearances: 45, assists: 7 } },
+    { name: "João Neves", club: "Benfica", stats: { appearances: 30, tackles: 55 } }
   ],
 
   "Forwards": [
-    {
-      name: "Cristiano Ronaldo",
-      club: "Al Nassr",
-      image: "https://upload.wikimedia.org/wikipedia/commons/8/8c/Cristiano_Ronaldo_2023.jpg",
-      stats: { goals: 38, assists: 11 }
-    },
-    {
-      name: "João Félix",
-      club: "Barcelona",
-      image: "https://upload.wikimedia.org/wikipedia/commons/6/6b/Jo%C3%A3o_F%C3%A9lix_2023.jpg",
-      stats: { goals: 12, assists: 6 }
-    },
-    {
-      name: "Rafael Leão",
-      club: "AC Milan",
-      image: "https://upload.wikimedia.org/wikipedia/commons/5/5d/Rafael_Le%C3%A3o_2022.jpg",
-      stats: { goals: 15, assists: 13 }
-    },
-    {
-      name: "Pedro Neto",
-      club: "Wolves",
-      image: "https://upload.wikimedia.org/wikipedia/commons/3/3d/Pedro_Neto_2023.jpg",
-      stats: { goals: 6, assists: 7 }
-    },
-    {
-      name: "Francisco Conceição",
-      club: "Porto",
-      image: "https://upload.wikimedia.org/wikipedia/commons/2/2d/Francisco_Concei%C3%A7%C3%A3o_2023.jpg",
-      stats: { goals: 5, assists: 4 }
-    },
-    {
-      name: "Francisco Trincão",
-      club: "Sporting",
-      image: "https://upload.wikimedia.org/wikipedia/commons/4/4c/Trincao_2023.jpg",
-      stats: { goals: 7, assists: 5 }
-    },
-    {
-      name: "Gonçalo Ramos",
-      club: "PSG",
-      image: "https://upload.wikimedia.org/wikipedia/commons/9/9d/Goncalo_Ramos_2023.jpg",
-      stats: { goals: 16, assists: 3 }
-    }
+    { name: "Cristiano Ronaldo", club: "Al Nassr", stats: { goals: 38, assists: 11 } },
+    { name: "João Félix", club: "Barcelona", stats: { goals: 12, assists: 6 } },
+    { name: "Rafael Leão", club: "AC Milan", stats: { goals: 15, assists: 13 } },
+    { name: "Pedro Neto", club: "Wolves", stats: { goals: 6, assists: 7 } },
+    { name: "Francisco Conceição", club: "Porto", stats: { goals: 5, assists: 4 } },
+    { name: "Francisco Trincão", club: "Sporting", stats: { goals: 7, assists: 5 } },
+    { name: "Gonçalo Ramos", club: "PSG", stats: { goals: 16, assists: 3 } }
   ]
+
 };
 
 function render() {
@@ -190,7 +111,7 @@ function render() {
 
 function openPlayer(p) {
   document.getElementById("modal").classList.remove("hidden");
-  document.getElementById("pimg").src = p.image;
+
   document.getElementById("pname").innerText = p.name;
   document.getElementById("pclub").innerText = p.club;
 
