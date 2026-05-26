@@ -4,238 +4,213 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Portugal Squad Stats</title>
-
   <script src="https://cdn.tailwindcss.com"></script>
-
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-    }
-
-    .modal {
-      display: none;
-    }
-
-    .modal.active {
-      display: flex;
-    }
-  </style>
 </head>
+
 <body class="bg-black text-white min-h-screen p-6">
 
   <div class="max-w-7xl mx-auto">
+
+    <!-- Header -->
     <div class="text-center mb-10">
       <img
         src="https://upload.wikimedia.org/wikipedia/en/5/5c/Portugal_national_football_team_logo.svg"
+        class="w-28 h-28 mx-auto mb-4 bg-white rounded-full p-2"
         alt="Portugal Logo"
-        class="w-32 h-32 mx-auto mb-4 bg-white rounded-full p-2"
       />
-      <h1 class="text-5xl font-bold text-red-500 mb-2">
-        Portugal National Team
-      </h1>
-      <p class="text-gray-400 text-lg">
-        Official Squad & Current Season Stats
-      </p>
+      <h1 class="text-4xl font-bold text-red-500">Portugal National Team</h1>
+      <p class="text-gray-400">Official Squad • Current Season Stats</p>
+      <p class="text-green-400 mt-2">Formation: 4-3-3</p>
     </div>
 
-    <div id="squad-container" class="grid gap-8"></div>
+    <div id="squad"></div>
   </div>
 
-  <div id="playerModal" class="modal fixed inset-0 bg-black/70 items-center justify-center p-4 z-50">
-    <div class="bg-zinc-900 rounded-3xl p-8 w-full max-w-xl border border-zinc-700 relative">
-      <button
-        onclick="closeModal()"
-        class="absolute top-4 right-4 bg-red-600 hover:bg-red-700 px-3 py-1 rounded-lg"
-      >
-        Close
-      </button>
+  <!-- Modal -->
+  <div id="modal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center p-4">
+    <div class="bg-zinc-900 p-6 rounded-2xl w-full max-w-lg relative">
+      <button onclick="closeModal()" class="absolute right-4 top-4 bg-red-600 px-3 py-1 rounded">Close</button>
 
-      <img id="playerImage" class="w-40 h-40 rounded-full mx-auto mb-6 border-4 border-green-500 object-cover" src="" alt="Player Image" />
+      <img id="pimg" class="w-32 h-32 mx-auto rounded-full border-4 border-green-500 mb-4" />
+      <h2 id="pname" class="text-center text-3xl font-bold text-red-500"></h2>
+      <p id="pclub" class="text-center text-gray-400 mb-4"></p>
 
-      <h2 id="playerName" class="text-4xl font-bold text-red-500 mb-2 text-center"></h2>
-
-      <p id="playerClub" class="text-gray-400 text-lg mb-6"></p>
-
-      <div id="playerStats" class="grid grid-cols-2 gap-4"></div>
+      <div id="stats" class="grid grid-cols-2 gap-3"></div>
     </div>
   </div>
 
-  <script>
-    const squad = {
-      Goalkeepers: [
-        {
-          image: 'https://images.fotmob.com/image_resources/playerimages/1083327.png',
-          name: 'Diogo Costa',
-          club: 'FC Porto',
-          stats: {
-            appearances: 42,
-            cleanSheets: 18,
-            saves: 112,
-            yellowCards: 2,
-            redCards: 0,
-          },
-        },
-        {
-          image: 'https://images.fotmob.com/image_resources/playerimages/292462.png',
-          name: 'José Sá',
-          club: 'Wolverhampton',
-          stats: {
-            appearances: 30,
-            cleanSheets: 8,
-            saves: 95,
-            yellowCards: 1,
-            redCards: 0,
-          },
-        },
-      ],
+<script>
 
-      Defenders: [
-        {
-          image: 'https://images.fotmob.com/image_resources/playerimages/846033.png',
-          name: 'Rúben Dias',
-          club: 'Manchester City',
-          stats: {
-            appearances: 39,
-            goals: 2,
-            assists: 1,
-            tackles: 74,
-            yellowCards: 5,
-            redCards: 0,
-          },
-        },
-        {
-          image: 'https://images.fotmob.com/image_resources/playerimages/545988.png',
-          name: 'João Cancelo',
-          club: 'Barcelona',
-          stats: {
-            appearances: 41,
-            goals: 4,
-            assists: 8,
-            tackles: 61,
-            yellowCards: 6,
-            redCards: 0,
-          },
-        },
-      ],
+const squad = {
 
-      Midfielders: [
-        {
-          image: 'https://images.fotmob.com/image_resources/playerimages/629187.png',
-          name: 'Bruno Fernandes',
-          club: 'Manchester United',
-          stats: {
-            appearances: 48,
-            goals: 14,
-            assists: 12,
-            passes: 1880,
-            yellowCards: 7,
-            redCards: 0,
-          },
-        },
-        {
-          image: 'https://images.fotmob.com/image_resources/playerimages/1083326.png',
-          name: 'Vitinha',
-          club: 'PSG',
-          stats: {
-            appearances: 44,
-            goals: 7,
-            assists: 5,
-            passes: 2140,
-            yellowCards: 4,
-            redCards: 0,
-          },
-        },
-      ],
+  "Goalkeepers": [
+    {
+      name: "Diogo Costa",
+      club: "FC Porto",
+      image: "https://upload.wikimedia.org/wikipedia/commons/3/3a/Diogo_Costa_2022.jpg",
+      stats: { appearances: 42, cleanSheets: 18, saves: 112 }
+    },
+    {
+      name: "José Sá",
+      club: "Wolves",
+      image: "https://upload.wikimedia.org/wikipedia/commons/5/5c/Jos%C3%A9_S%C3%A1_2022.jpg",
+      stats: { appearances: 30, cleanSheets: 8, saves: 95 }
+    },
+    {
+      name: "Rui Silva",
+      club: "Real Betis",
+      image: "https://upload.wikimedia.org/wikipedia/commons/2/2b/Rui_Silva_2021.jpg",
+      stats: { appearances: 28, cleanSheets: 10, saves: 88 }
+    }
+  ],
 
-      Forwards: [
-        {
-          image: 'https://images.fotmob.com/image_resources/playerimages/30893.png',
-          name: 'Cristiano Ronaldo',
-          club: 'Al Nassr',
-          stats: {
-            appearances: 45,
-            goals: 38,
-            assists: 11,
-            shots: 170,
-            yellowCards: 3,
-            redCards: 0,
-          },
-        },
-        {
-          image: 'https://images.fotmob.com/image_resources/playerimages/1083325.png',
-          name: 'Rafael Leão',
-          club: 'AC Milan',
-          stats: {
-            appearances: 40,
-            goals: 15,
-            assists: 13,
-            shots: 104,
-            yellowCards: 5,
-            redCards: 0,
-          },
-        },
-      ],
-    };
+  "Defenders": [
+    {
+      name: "Nuno Mendes",
+      club: "PSG",
+      image: "https://upload.wikimedia.org/wikipedia/commons/8/8a/Nuno_Mendes_2022.jpg",
+      stats: { appearances: 35, assists: 5 }
+    },
+    {
+      name: "João Cancelo",
+      club: "Barcelona",
+      image: "https://upload.wikimedia.org/wikipedia/commons/3/3a/Jo%C3%A3o_Cancelo_2022.jpg",
+      stats: { appearances: 41, goals: 4 }
+    },
+    {
+      name: "Rúben Dias",
+      club: "Man City",
+      image: "https://upload.wikimedia.org/wikipedia/commons/1/1b/Ruben_Dias_2021.jpg",
+      stats: { appearances: 39, tackles: 74 }
+    },
+    {
+      name: "Gonçalo Inácio",
+      club: "Sporting",
+      image: "https://upload.wikimedia.org/wikipedia/commons/4/4a/Gon%C3%A7alo_In%C3%A1cio_2023.jpg",
+      stats: { appearances: 33, goals: 3 }
+    }
+  ],
 
-    const squadContainer = document.getElementById('squad-container');
+  "Midfielders": [
+    {
+      name: "Vitinha",
+      club: "PSG",
+      image: "https://upload.wikimedia.org/wikipedia/commons/6/6a/Vitinha_2023.jpg",
+      stats: { appearances: 44, assists: 5 }
+    },
+    {
+      name: "Bruno Fernandes",
+      club: "Man United",
+      image: "https://upload.wikimedia.org/wikipedia/commons/9/9a/Bruno_Fernandes_2022.jpg",
+      stats: { appearances: 48, goals: 14 }
+    },
+    {
+      name: "Bernardo Silva",
+      club: "Man City",
+      image: "https://upload.wikimedia.org/wikipedia/commons/7/7a/Bernardo_Silva_2022.jpg",
+      stats: { appearances: 45, assists: 7 }
+    },
+    {
+      name: "João Neves",
+      club: "Benfica",
+      image: "https://upload.wikimedia.org/wikipedia/commons/1/1a/Jo%C3%A3o_Neves_2024.jpg",
+      stats: { appearances: 30, tackles: 55 }
+    }
+  ],
 
-    Object.entries(squad).forEach(([position, players]) => {
-      const section = document.createElement('div');
+  "Forwards": [
+    {
+      name: "Cristiano Ronaldo",
+      club: "Al Nassr",
+      image: "https://upload.wikimedia.org/wikipedia/commons/8/8c/Cristiano_Ronaldo_2023.jpg",
+      stats: { goals: 38, assists: 11 }
+    },
+    {
+      name: "João Félix",
+      club: "Barcelona",
+      image: "https://upload.wikimedia.org/wikipedia/commons/6/6b/Jo%C3%A3o_F%C3%A9lix_2023.jpg",
+      stats: { goals: 12, assists: 6 }
+    },
+    {
+      name: "Rafael Leão",
+      club: "AC Milan",
+      image: "https://upload.wikimedia.org/wikipedia/commons/5/5d/Rafael_Le%C3%A3o_2022.jpg",
+      stats: { goals: 15, assists: 13 }
+    },
+    {
+      name: "Pedro Neto",
+      club: "Wolves",
+      image: "https://upload.wikimedia.org/wikipedia/commons/3/3d/Pedro_Neto_2023.jpg",
+      stats: { goals: 6, assists: 7 }
+    },
+    {
+      name: "Francisco Conceição",
+      club: "Porto",
+      image: "https://upload.wikimedia.org/wikipedia/commons/2/2d/Francisco_Concei%C3%A7%C3%A3o_2023.jpg",
+      stats: { goals: 5, assists: 4 }
+    },
+    {
+      name: "Francisco Trincão",
+      club: "Sporting",
+      image: "https://upload.wikimedia.org/wikipedia/commons/4/4c/Trincao_2023.jpg",
+      stats: { goals: 7, assists: 5 }
+    },
+    {
+      name: "Gonçalo Ramos",
+      club: "PSG",
+      image: "https://upload.wikimedia.org/wikipedia/commons/9/9d/Goncalo_Ramos_2023.jpg",
+      stats: { goals: 16, assists: 3 }
+    }
+  ]
+};
 
-      section.className = 'bg-zinc-900 rounded-3xl p-6 shadow-2xl border border-zinc-800';
+function render() {
+  const container = document.getElementById("squad");
+  container.innerHTML = "";
 
-      section.innerHTML = `
-        <h2 class="text-3xl font-bold text-green-400 mb-6">${position}</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          ${players.map(player => `
-            <button
-              onclick='showPlayer(${JSON.stringify(player)})'
-              class="bg-zinc-800 hover:bg-zinc-700 transition-all duration-300 rounded-2xl p-5 text-left hover:scale-105"
-            >
-              <h3 class="text-2xl font-semibold text-white mb-2">${player.name}</h3>
-              <p class="text-gray-400">${player.club}</p>
-              <div class="mt-4 text-sm text-gray-300">
-                Click to view current season stats
-              </div>
-            </button>
-          `).join('')}
-        </div>
-      `;
+  Object.keys(squad).forEach(pos => {
+    const section = document.createElement("div");
+    section.className = "mb-8 bg-zinc-900 p-4 rounded-xl";
 
-      squadContainer.appendChild(section);
+    section.innerHTML = `<h2 class='text-2xl text-green-400 mb-4'>${pos}</h2><div class='grid md:grid-cols-3 gap-3'></div>`;
+
+    const grid = section.querySelector("div");
+
+    squad[pos].forEach(p => {
+      const btn = document.createElement("button");
+      btn.className = "bg-zinc-800 p-3 rounded-xl hover:scale-105 transition text-left";
+      btn.innerHTML = `<div class='font-bold'>${p.name}</div><div class='text-gray-400 text-sm'>${p.club}</div>`;
+      btn.onclick = () => openPlayer(p);
+      grid.appendChild(btn);
     });
 
-    function showPlayer(player) {
-      document.getElementById('playerImage').src = player.image;
-      document.getElementById('playerName').innerText = player.name;
-      document.getElementById('playerClub').innerText = player.club;
+    container.appendChild(section);
+  });
+}
 
-      const statsContainer = document.getElementById('playerStats');
-      statsContainer.innerHTML = '';
+function openPlayer(p) {
+  document.getElementById("modal").classList.remove("hidden");
+  document.getElementById("pimg").src = p.image;
+  document.getElementById("pname").innerText = p.name;
+  document.getElementById("pclub").innerText = p.club;
 
-      Object.entries(player.stats).forEach(([key, value]) => {
-        const statBox = document.createElement('div');
+  const stats = document.getElementById("stats");
+  stats.innerHTML = "";
 
-        statBox.className = 'bg-zinc-800 rounded-2xl p-4';
+  Object.keys(p.stats).forEach(k => {
+    const div = document.createElement("div");
+    div.className = "bg-zinc-800 p-2 rounded";
+    div.innerHTML = `<div class='text-gray-400'>${k}</div><div class='text-green-400 font-bold'>${p.stats[k]}</div>`;
+    stats.appendChild(div);
+  });
+}
 
-        statBox.innerHTML = `
-          <div class="text-gray-400 capitalize text-sm mb-1">
-            ${key.replace(/([A-Z])/g, ' $1')}
-          </div>
-          <div class="text-3xl font-bold text-green-400">
-            ${value}
-          </div>
-        `;
+function closeModal() {
+  document.getElementById("modal").classList.add("hidden");
+}
 
-        statsContainer.appendChild(statBox);
-      });
+render();
 
-      document.getElementById('playerModal').classList.add('active');
-    }
-
-    function closeModal() {
-      document.getElementById('playerModal').classList.remove('active');
-    }
-  </script>
+</script>
 </body>
 </html>
