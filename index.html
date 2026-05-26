@@ -1,140 +1,124 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Portugal Squad Stats</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Portugal Squad 2026</title>
+<script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="bg-black text-white min-h-screen p-6">
+<body class="bg-black text-white">
 
-  <!-- Background Audio (user can replace file) -->
-  <audio autoplay loop controls class="fixed bottom-4 right-4 z-50 opacity-70">
-    <source src="stadium.mp3" type="audio/mpeg">
-  </audio>
+<!-- HEADER -->
+<div class="text-center p-6">
+  <img src="https://upload.wikimedia.org/wikipedia/en/5/5c/Portugal_national_football_team_logo.svg"
+       class="w-28 h-28 mx-auto bg-white rounded-full p-2"/>
+  <h1 class="text-4xl font-bold text-red-500 mt-3">Portugal National Team</h1>
+  <p class="text-green-400">Formation: 4-3-3</p>
+  <p class="text-gray-400">Manager: Roberto Martínez</p>
+</div>
 
-  <div class="max-w-7xl mx-auto">
+<div id="app" class="p-4"></div>
 
-    <!-- Header -->
-    <div class="text-center mb-10">
-      <img
-        src="https://upload.wikimedia.org/wikipedia/en/5/5c/Portugal_national_football_team_logo.svg"
-        class="w-28 h-28 mx-auto mb-4 bg-white rounded-full p-2"
-        alt="Portugal Logo"
-      />
-      <h1 class="text-4xl font-bold text-red-500">Portugal National Team</h1>
-      <p class="text-gray-400">Squad Overview • Structured Player Stats</p>
-      <p class="text-green-400 mt-2">Formation: 4-3-3</p>
-    </div>
+<!-- MODAL -->
+<div id="modal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center p-4">
+  <div class="bg-zinc-900 p-6 rounded-xl w-full max-w-md relative">
+    <button onclick="closeModal()" class="absolute top-2 right-3 bg-red-600 px-3 py-1 rounded">X</button>
 
-    <div id="squad"></div>
+    <img src="https://upload.wikimedia.org/wikipedia/en/5/5c/Portugal_national_football_team_logo.svg"
+         class="w-24 h-24 mx-auto bg-white rounded-full p-2"/>
+
+    <h2 id="name" class="text-2xl font-bold text-center mt-3"></h2>
+    <p id="club" class="text-center text-gray-400 mb-4"></p>
+
+    <div id="stats" class="grid grid-cols-2 gap-2"></div>
   </div>
-
-  <!-- Modal -->
-  <div id="modal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center p-4">
-    <div class="bg-zinc-900 p-6 rounded-2xl w-full max-w-lg relative">
-      <button onclick="closeModal()" class="absolute right-4 top-4 bg-red-600 px-3 py-1 rounded">
-        Close
-      </button>
-
-      <!-- Always Portugal logo (as requested) -->
-      <img
-        src="https://upload.wikimedia.org/wikipedia/en/5/5c/Portugal_national_football_team_logo.svg"
-        class="w-32 h-32 mx-auto rounded-full border-4 border-green-500 mb-4 bg-white p-2"
-        alt="Portugal Logo"
-      />
-
-      <h2 id="pname" class="text-center text-3xl font-bold text-red-500"></h2>
-      <p id="pclub" class="text-center text-gray-400 mb-4"></p>
-
-      <div id="stats" class="grid grid-cols-2 gap-3"></div>
-    </div>
-  </div>
+</div>
 
 <script>
-
 const squad = {
-
-  "Goalkeepers": [
-    { name: "Diogo Costa", club: "FC Porto", stats: { appearances: 42, cleanSheets: 18, saves: 112 } },
-    { name: "José Sá", club: "Wolves", stats: { appearances: 30, cleanSheets: 8, saves: 95 } },
-    { name: "Rui Silva", club: "Real Betis", stats: { appearances: 28, cleanSheets: 10, saves: 88 } }
+  "Goalkeepers":[
+    {name:"Diogo Costa",club:"FC Porto",stats:{apps:42,cs:18,saves:112}},
+    {name:"José Sá",club:"Wolves",stats:{apps:30,cs:8,saves:95}},
+    {name:"Rui Silva",club:"Betis",stats:{apps:28,cs:10,saves:88}}
   ],
 
-  "Defenders": [
-    { name: "Nuno Mendes", club: "PSG", stats: { appearances: 35, goals: 2, assists: 5 } },
-    { name: "João Cancelo", club: "Barcelona", stats: { appearances: 41, goals: 4, assists: 6 } },
-    { name: "Rúben Dias", club: "Man City", stats: { appearances: 39, goals: 2, assists: 1 } },
-    { name: "Gonçalo Inácio", club: "Sporting", stats: { appearances: 33, goals: 3, assists: 1 } }
+  "Defenders":[
+    {name:"Nuno Mendes",club:"PSG",stats:{apps:35,goals:2,assists:5}},
+    {name:"João Cancelo",club:"Barcelona",stats:{apps:41,goals:4,assists:6}},
+    {name:"Rúben Dias",club:"Man City",stats:{apps:39,goals:2,assists:1}},
+    {name:"Gonçalo Inácio",club:"Sporting",stats:{apps:33,goals:3,assists:1}},
+    {name:"Diogo Dalot",club:"Man United",stats:{apps:38,goals:2,assists:3}},
+    {name:"António Silva",club:"Benfica",stats:{apps:32,goals:2,assists:0}}
   ],
 
-  "Midfielders": [
-    { name: "Vitinha", club: "PSG", stats: { appearances: 44, goals: 3, assists: 5 } },
-    { name: "Bruno Fernandes", club: "Man United", stats: { appearances: 48, goals: 14, assists: 12 } },
-    { name: "Bernardo Silva", club: "Man City", stats: { appearances: 45, goals: 6, assists: 7 } },
-    { name: "João Neves", club: "Benfica", stats: { appearances: 30, goals: 2, assists: 3 } }
+  "Midfielders":[
+    {name:"Bruno Fernandes",club:"Man United",stats:{apps:48,goals:14,assists:12}},
+    {name:"Bernardo Silva",club:"Man City",stats:{apps:45,goals:6,assists:7}},
+    {name:"Vitinha",club:"PSG",stats:{apps:44,goals:3,assists:5}},
+    {name:"João Neves",club:"Benfica",stats:{apps:30,goals:2,assists:3}},
+    {name:"Rúben Neves",club:"Al Hilal",stats:{apps:40,goals:5,assists:4}},
+    {name:"João Palhinha",club:"Fulham",stats:{apps:36,goals:2,assists:1}}
   ],
 
-  "Forwards": [
-    { name: "Cristiano Ronaldo", club: "Al Nassr", stats: { appearances: 45, goals: 38, assists: 11 } },
-    { name: "João Félix", club: "Barcelona", stats: { appearances: 32, goals: 12, assists: 6 } },
-    { name: "Rafael Leão", club: "AC Milan", stats: { appearances: 40, goals: 15, assists: 13 } },
-    { name: "Pedro Neto", club: "Wolves", stats: { appearances: 29, goals: 6, assists: 7 } },
-    { name: "Francisco Conceição", club: "Porto", stats: { appearances: 27, goals: 5, assists: 4 } },
-    { name: "Francisco Trincão", club: "Sporting", stats: { appearances: 31, goals: 7, assists: 5 } },
-    { name: "Gonçalo Ramos", club: "PSG", stats: { appearances: 34, goals: 16, assists: 3 } }
+  "Forwards":[
+    {name:"Cristiano Ronaldo",club:"Al Nassr",stats:{apps:32,goals:29,assists:3}},
+    {name:"João Félix",club:"Barcelona",stats:{apps:32,goals:12,assists:6}},
+    {name:"Rafael Leão",club:"AC Milan",stats:{apps:40,goals:15,assists:13}},
+    {name:"Pedro Neto",club:"Wolves",stats:{apps:29,goals:6,assists:7}},
+    {name:"Gonçalo Ramos",club:"PSG",stats:{apps:34,goals:16,assists:3}},
+    {name:"Francisco Conceição",club:"Porto",stats:{apps:27,goals:5,assists:4}},
+    {name:"Francisco Trincão",club:"Sporting",stats:{apps:31,goals:7,assists:5}}
   ]
-
 };
 
-function render() {
-  const container = document.getElementById("squad");
-  container.innerHTML = "";
+function render(){
+  const app=document.getElementById("app");
+  app.innerHTML="";
 
-  Object.keys(squad).forEach(pos => {
-    const section = document.createElement("div");
-    section.className = "mb-8 bg-zinc-900 p-4 rounded-xl";
+  Object.keys(squad).forEach(pos=>{
+    let box=document.createElement("div");
+    box.className="mb-6";
 
-    section.innerHTML = `<h2 class='text-2xl text-green-400 mb-4'>${pos}</h2><div class='grid md:grid-cols-3 gap-3'></div>`;
+    box.innerHTML=`<h2 class='text-xl text-green-400 mb-2'>${pos}</h2>
+    <div class='grid md:grid-cols-3 gap-2'></div>`;
 
-    const grid = section.querySelector("div");
+    let grid=box.querySelector("div");
 
-    squad[pos].forEach(p => {
-      const btn = document.createElement("button");
-      btn.className = "bg-zinc-800 p-3 rounded-xl hover:scale-105 transition text-left";
-      btn.innerHTML = `<div class='font-bold'>${p.name}</div><div class='text-gray-400 text-sm'>${p.club}</div>`;
-      btn.onclick = () => openPlayer(p);
+    squad[pos].forEach(p=>{
+      let btn=document.createElement("button");
+      btn.className="bg-zinc-800 p-3 rounded hover:scale-105 text-left";
+      btn.innerHTML=`<b>${p.name}</b><br><span class='text-gray-400'>${p.club}</span>`;
+      btn.onclick=()=>openPlayer(p);
       grid.appendChild(btn);
     });
 
-    container.appendChild(section);
+    app.appendChild(box);
   });
 }
 
-function openPlayer(p) {
+function openPlayer(p){
   document.getElementById("modal").classList.remove("hidden");
+  document.getElementById("name").innerText=p.name;
+  document.getElementById("club").innerText=p.club;
 
-  document.getElementById("pname").innerText = p.name;
-  document.getElementById("pclub").innerText = p.club;
+  let stats=document.getElementById("stats");
+  stats.innerHTML="";
 
-  const stats = document.getElementById("stats");
-  stats.innerHTML = "";
-
-  Object.keys(p.stats).forEach(k => {
-    const div = document.createElement("div");
-    div.className = "bg-zinc-800 p-2 rounded";
-    div.innerHTML = `<div class='text-gray-400 capitalize'>${k}</div><div class='text-green-400 font-bold'>${p.stats[k]}</div>`;
-    stats.appendChild(div);
+  Object.keys(p.stats).forEach(k=>{
+    let d=document.createElement("div");
+    d.className="bg-zinc-800 p-2 rounded text-center";
+    d.innerHTML=`<div class='text-gray-400'>${k}</div><div class='text-green-400 font-bold'>${p.stats[k]}</div>`;
+    stats.appendChild(d);
   });
 }
 
-function closeModal() {
+function closeModal(){
   document.getElementById("modal").classList.add("hidden");
 }
 
 render();
-
 </script>
+
 </body>
 </html>
