@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portugal Squad Stats</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    .modal {
+      display: none;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+  </style>
+</head>
+<body class="bg-black text-white min-h-screen p-6">
+
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-10">
+      <img
+        src="https://upload.wikimedia.org/wikipedia/en/5/5c/Portugal_national_football_team_logo.svg"
+        alt="Portugal Logo"
+        class="w-32 h-32 mx-auto mb-4 bg-white rounded-full p-2"
+      />
+      <h1 class="text-5xl font-bold text-red-500 mb-2">
+        Portugal National Team
+      </h1>
+      <p class="text-gray-400 text-lg">
+        Official Squad & Current Season Stats
+      </p>
+    </div>
+
+    <div id="squad-container" class="grid gap-8"></div>
+  </div>
+
+  <div id="playerModal" class="modal fixed inset-0 bg-black/70 items-center justify-center p-4 z-50">
+    <div class="bg-zinc-900 rounded-3xl p-8 w-full max-w-xl border border-zinc-700 relative">
+      <button
+        onclick="closeModal()"
+        class="absolute top-4 right-4 bg-red-600 hover:bg-red-700 px-3 py-1 rounded-lg"
+      >
+        Close
+      </button>
+
+      <img id="playerImage" class="w-40 h-40 rounded-full mx-auto mb-6 border-4 border-green-500 object-cover" src="" alt="Player Image" />
+
+      <h2 id="playerName" class="text-4xl font-bold text-red-500 mb-2 text-center"></h2>
+
+      <p id="playerClub" class="text-gray-400 text-lg mb-6"></p>
+
+      <div id="playerStats" class="grid grid-cols-2 gap-4"></div>
+    </div>
+  </div>
+
+  <script>
+    const squad = {
+      Goalkeepers: [
+        {
+          image: 'https://images.fotmob.com/image_resources/playerimages/1083327.png',
+          name: 'Diogo Costa',
+          club: 'FC Porto',
+          stats: {
+            appearances: 42,
+            cleanSheets: 18,
+            saves: 112,
+            yellowCards: 2,
+            redCards: 0,
+          },
+        },
+        {
+          image: 'https://images.fotmob.com/image_resources/playerimages/292462.png',
+          name: 'José Sá',
+          club: 'Wolverhampton',
+          stats: {
+            appearances: 30,
+            cleanSheets: 8,
+            saves: 95,
+            yellowCards: 1,
+            redCards: 0,
+          },
+        },
+      ],
+
+      Defenders: [
+        {
+          image: 'https://images.fotmob.com/image_resources/playerimages/846033.png',
+          name: 'Rúben Dias',
+          club: 'Manchester City',
+          stats: {
+            appearances: 39,
+            goals: 2,
+            assists: 1,
+            tackles: 74,
+            yellowCards: 5,
+            redCards: 0,
+          },
+        },
+        {
+          image: 'https://images.fotmob.com/image_resources/playerimages/545988.png',
+          name: 'João Cancelo',
+          club: 'Barcelona',
+          stats: {
+            appearances: 41,
+            goals: 4,
+            assists: 8,
+            tackles: 61,
+            yellowCards: 6,
+            redCards: 0,
+          },
+        },
+      ],
+
+      Midfielders: [
+        {
+          image: 'https://images.fotmob.com/image_resources/playerimages/629187.png',
+          name: 'Bruno Fernandes',
+          club: 'Manchester United',
+          stats: {
+            appearances: 48,
+            goals: 14,
+            assists: 12,
+            passes: 1880,
+            yellowCards: 7,
+            redCards: 0,
+          },
+        },
+        {
+          image: 'https://images.fotmob.com/image_resources/playerimages/1083326.png',
+          name: 'Vitinha',
+          club: 'PSG',
+          stats: {
+            appearances: 44,
+            goals: 7,
+            assists: 5,
+            passes: 2140,
+            yellowCards: 4,
+            redCards: 0,
+          },
+        },
+      ],
+
+      Forwards: [
+        {
+          image: 'https://images.fotmob.com/image_resources/playerimages/30893.png',
+          name: 'Cristiano Ronaldo',
+          club: 'Al Nassr',
+          stats: {
+            appearances: 45,
+            goals: 38,
+            assists: 11,
+            shots: 170,
+            yellowCards: 3,
+            redCards: 0,
+          },
+        },
+        {
+          image: 'https://images.fotmob.com/image_resources/playerimages/1083325.png',
+          name: 'Rafael Leão',
+          club: 'AC Milan',
+          stats: {
+            appearances: 40,
+            goals: 15,
+            assists: 13,
+            shots: 104,
+            yellowCards: 5,
+            redCards: 0,
+          },
+        },
+      ],
+    };
+
+    const squadContainer = document.getElementById('squad-container');
+
+    Object.entries(squad).forEach(([position, players]) => {
+      const section = document.createElement('div');
+
+      section.className = 'bg-zinc-900 rounded-3xl p-6 shadow-2xl border border-zinc-800';
+
+      section.innerHTML = `
+        <h2 class="text-3xl font-bold text-green-400 mb-6">${position}</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          ${players.map(player => `
+            <button
+              onclick='showPlayer(${JSON.stringify(player)})'
+              class="bg-zinc-800 hover:bg-zinc-700 transition-all duration-300 rounded-2xl p-5 text-left hover:scale-105"
+            >
+              <h3 class="text-2xl font-semibold text-white mb-2">${player.name}</h3>
+              <p class="text-gray-400">${player.club}</p>
+              <div class="mt-4 text-sm text-gray-300">
+                Click to view current season stats
+              </div>
+            </button>
+          `).join('')}
+        </div>
+      `;
+
+      squadContainer.appendChild(section);
+    });
+
+    function showPlayer(player) {
+      document.getElementById('playerImage').src = player.image;
+      document.getElementById('playerName').innerText = player.name;
+      document.getElementById('playerClub').innerText = player.club;
+
+      const statsContainer = document.getElementById('playerStats');
+      statsContainer.innerHTML = '';
+
+      Object.entries(player.stats).forEach(([key, value]) => {
+        const statBox = document.createElement('div');
+
+        statBox.className = 'bg-zinc-800 rounded-2xl p-4';
+
+        statBox.innerHTML = `
+          <div class="text-gray-400 capitalize text-sm mb-1">
+            ${key.replace(/([A-Z])/g, ' $1')}
+          </div>
+          <div class="text-3xl font-bold text-green-400">
+            ${value}
+          </div>
+        `;
+
+        statsContainer.appendChild(statBox);
+      });
+
+      document.getElementById('playerModal').classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('playerModal').classList.remove('active');
+    }
+  </script>
+</body>
+</html>
