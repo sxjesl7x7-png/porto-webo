@@ -3,122 +3,100 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Portugal Squad 2026</title>
+<title>Portugal World Cup 2026</title>
 <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body class="bg-black text-white">
 
-<!-- HEADER -->
-<div class="text-center p-6">
-  <img src="https://upload.wikimedia.org/wikipedia/en/5/5c/Portugal_national_football_team_logo.svg"
-       class="w-28 h-28 mx-auto bg-white rounded-full p-2"/>
-  <h1 class="text-4xl font-bold text-red-500 mt-3">Portugal National Team</h1>
-  <p class="text-green-400">Formation: 4-3-3</p>
-  <p class="text-gray-400">Manager: Roberto Martínez</p>
+<!-- WELCOME HEADER -->
+<div class="text-center p-6 border-b border-gray-700">
+
+  <!-- PORTUGAL LOGO (FIXED) -->
+  <img
+    src="https://upload.wikimedia.org/wikipedia/en/5/5c/Portugal_national_football_team_logo.svg"
+    class="w-28 h-28 mx-auto bg-white rounded-full p-2"
+    alt="Portugal Logo"
+  />
+
+  <h1 class="text-3xl font-bold text-red-500 mt-3">
+    Welcome to Portugal World Cup 2026 Squad
+  </h1>
+
+  <p class="text-green-400 mt-2">
+    Formation: 4-3-3
+  </p>
+
+  <p class="text-gray-400">
+    Manager: Roberto Martínez
+  </p>
+
 </div>
 
-<div id="app" class="p-4"></div>
+<!-- SQUAD -->
+<div class="p-4 space-y-6">
 
-<!-- MODAL -->
-<div id="modal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center p-4">
-  <div class="bg-zinc-900 p-6 rounded-xl w-full max-w-md relative">
-    <button onclick="closeModal()" class="absolute top-2 right-3 bg-red-600 px-3 py-1 rounded">X</button>
+  <!-- GOALKEEPERS -->
+  <section>
+    <h2 class="text-xl text-green-400 mb-2">Goalkeepers</h2>
+    <div class="space-y-2">
+      <div class="bg-zinc-800 p-3 rounded">
+        Diogo Costa<br><span class="text-gray-400 text-sm">FC Porto</span>
+      </div>
+      <div class="bg-zinc-800 p-3 rounded">
+        José Sá<br><span class="text-gray-400 text-sm">Wolves</span>
+      </div>
+      <div class="bg-zinc-800 p-3 rounded">
+        Rui Silva<br><span class="text-gray-400 text-sm">Real Betis</span>
+      </div>
+    </div>
+  </section>
 
-    <img src="https://upload.wikimedia.org/wikipedia/en/5/5c/Portugal_national_football_team_logo.svg"
-         class="w-24 h-24 mx-auto bg-white rounded-full p-2"/>
+  <!-- DEFENDERS -->
+  <section>
+    <h2 class="text-xl text-green-400 mb-2">Defenders</h2>
+    <div class="space-y-2">
+      <div class="bg-zinc-800 p-3 rounded">Nuno Mendes<br><span class="text-gray-400 text-sm">PSG</span></div>
+      <div class="bg-zinc-800 p-3 rounded">João Cancelo<br><span class="text-gray-400 text-sm">Barcelona</span></div>
+      <div class="bg-zinc-800 p-3 rounded">Rúben Dias<br><span class="text-gray-400 text-sm">Man City</span></div>
+      <div class="bg-zinc-800 p-3 rounded">Gonçalo Inácio<br><span class="text-gray-400 text-sm">Sporting</span></div>
+      <div class="bg-zinc-800 p-3 rounded">Diogo Dalot<br><span class="text-gray-400 text-sm">Man United</span></div>
+      <div class="bg-zinc-800 p-3 rounded">António Silva<br><span class="text-gray-400 text-sm">Benfica</span></div>
+      <div class="bg-zinc-800 p-3 rounded">Nuno Tavares<br><span class="text-gray-400 text-sm">Lazio</span></div>
+      <div class="bg-zinc-800 p-3 rounded">Rúben Neves<br><span class="text-gray-400 text-sm">Al Hilal</span></div>
+    </div>
+  </section>
 
-    <h2 id="name" class="text-2xl font-bold text-center mt-3"></h2>
-    <p id="club" class="text-center text-gray-400 mb-4"></p>
+  <!-- MIDFIELDERS -->
+  <section>
+    <h2 class="text-xl text-green-400 mb-2">Midfielders</h2>
+    <div class="space-y-2">
+      <div class="bg-zinc-800 p-3 rounded">Bruno Fernandes<br><span class="text-gray-400 text-sm">Man United</span></div>
+      <div class="bg-zinc-800 p-3 rounded">Bernardo Silva<br><span class="text-gray-400 text-sm">Man City</span></div>
+      <div class="bg-zinc-800 p-3 rounded">Vitinha<br><span class="text-gray-400 text-sm">PSG</span></div>
+      <div class="bg-zinc-800 p-3 rounded">João Neves<br><span class="text-gray-400 text-sm">Benfica</span></div>
+      <div class="bg-zinc-800 p-3 rounded">Rúben Neves<br><span class="text-gray-400 text-sm">Al Hilal</span></div>
+      <div class="bg-zinc-800 p-3 rounded">Matheus Nunes<br><span class="text-gray-400 text-sm">Man City</span></div>
+      <div class="bg-zinc-800 p-3 rounded">João Palhinha<br><span class="text-gray-400 text-sm">Fulham</span></div>
+      <div class="bg-zinc-800 p-3 rounded">Pedro Gonçalves<br><span class="text-gray-400 text-sm">Sporting</span></div>
+    </div>
+  </section>
 
-    <div id="stats" class="grid grid-cols-2 gap-2"></div>
-  </div>
+  <!-- FORWARDS -->
+  <section>
+    <h2 class="text-xl text-green-400 mb-2">Forwards</h2>
+    <div class="space-y-2">
+      <div class="bg-zinc-800 p-3 rounded">Cristiano Ronaldo<br><span class="text-gray-400 text-sm">Al Nassr</span></div>
+      <div class="bg-zinc-800 p-3 rounded">João Félix<br><span class="text-gray-400 text-sm">Barcelona</span></div>
+      <div class="bg-zinc-800 p-3 rounded">Rafael Leão<br><span class="text-gray-400 text-sm">AC Milan</span></div>
+      <div class="bg-zinc-800 p-3 rounded">Pedro Neto<br><span class="text-gray-400 text-sm">Wolves</span></div>
+      <div class="bg-zinc-800 p-3 rounded">Gonçalo Ramos<br><span class="text-gray-400 text-sm">PSG</span></div>
+      <div class="bg-zinc-800 p-3 rounded">Francisco Conceição<br><span class="text-gray-400 text-sm">Porto</span></div>
+      <div class="bg-zinc-800 p-3 rounded">Francisco Trincão<br><span class="text-gray-400 text-sm">Sporting</span></div>
+    </div>
+  </section>
+
 </div>
-
-<script>
-const squad = {
-  "Goalkeepers":[
-    {name:"Diogo Costa",club:"FC Porto",stats:{apps:42,cs:18,saves:112}},
-    {name:"José Sá",club:"Wolves",stats:{apps:30,cs:8,saves:95}},
-    {name:"Rui Silva",club:"Betis",stats:{apps:28,cs:10,saves:88}}
-  ],
-
-  "Defenders":[
-    {name:"Nuno Mendes",club:"PSG",stats:{apps:35,goals:2,assists:5}},
-    {name:"João Cancelo",club:"Barcelona",stats:{apps:41,goals:4,assists:6}},
-    {name:"Rúben Dias",club:"Man City",stats:{apps:39,goals:2,assists:1}},
-    {name:"Gonçalo Inácio",club:"Sporting",stats:{apps:33,goals:3,assists:1}},
-    {name:"Diogo Dalot",club:"Man United",stats:{apps:38,goals:2,assists:3}},
-    {name:"António Silva",club:"Benfica",stats:{apps:32,goals:2,assists:0}}
-  ],
-
-  "Midfielders":[
-    {name:"Bruno Fernandes",club:"Man United",stats:{apps:48,goals:14,assists:12}},
-    {name:"Bernardo Silva",club:"Man City",stats:{apps:45,goals:6,assists:7}},
-    {name:"Vitinha",club:"PSG",stats:{apps:44,goals:3,assists:5}},
-    {name:"João Neves",club:"Benfica",stats:{apps:30,goals:2,assists:3}},
-    {name:"Rúben Neves",club:"Al Hilal",stats:{apps:40,goals:5,assists:4}},
-    {name:"João Palhinha",club:"Fulham",stats:{apps:36,goals:2,assists:1}}
-  ],
-
-  "Forwards":[
-    {name:"Cristiano Ronaldo",club:"Al Nassr",stats:{apps:32,goals:29,assists:3}},
-    {name:"João Félix",club:"Barcelona",stats:{apps:32,goals:12,assists:6}},
-    {name:"Rafael Leão",club:"AC Milan",stats:{apps:40,goals:15,assists:13}},
-    {name:"Pedro Neto",club:"Wolves",stats:{apps:29,goals:6,assists:7}},
-    {name:"Gonçalo Ramos",club:"PSG",stats:{apps:34,goals:16,assists:3}},
-    {name:"Francisco Conceição",club:"Porto",stats:{apps:27,goals:5,assists:4}},
-    {name:"Francisco Trincão",club:"Sporting",stats:{apps:31,goals:7,assists:5}}
-  ]
-};
-
-function render(){
-  const app=document.getElementById("app");
-  app.innerHTML="";
-
-  Object.keys(squad).forEach(pos=>{
-    let box=document.createElement("div");
-    box.className="mb-6";
-
-    box.innerHTML=`<h2 class='text-xl text-green-400 mb-2'>${pos}</h2>
-    <div class='grid md:grid-cols-3 gap-2'></div>`;
-
-    let grid=box.querySelector("div");
-
-    squad[pos].forEach(p=>{
-      let btn=document.createElement("button");
-      btn.className="bg-zinc-800 p-3 rounded hover:scale-105 text-left";
-      btn.innerHTML=`<b>${p.name}</b><br><span class='text-gray-400'>${p.club}</span>`;
-      btn.onclick=()=>openPlayer(p);
-      grid.appendChild(btn);
-    });
-
-    app.appendChild(box);
-  });
-}
-
-function openPlayer(p){
-  document.getElementById("modal").classList.remove("hidden");
-  document.getElementById("name").innerText=p.name;
-  document.getElementById("club").innerText=p.club;
-
-  let stats=document.getElementById("stats");
-  stats.innerHTML="";
-
-  Object.keys(p.stats).forEach(k=>{
-    let d=document.createElement("div");
-    d.className="bg-zinc-800 p-2 rounded text-center";
-    d.innerHTML=`<div class='text-gray-400'>${k}</div><div class='text-green-400 font-bold'>${p.stats[k]}</div>`;
-    stats.appendChild(d);
-  });
-}
-
-function closeModal(){
-  document.getElementById("modal").classList.add("hidden");
-}
-
-render();
-</script>
 
 </body>
 </html>
